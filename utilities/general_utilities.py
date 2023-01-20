@@ -14,3 +14,16 @@ class GeneralUtilities:
     def get_all_headers() -> List[str]:
         return get_row_identifiers() + get_time_headers() \
                + get_habit_headers() + get_habit_time_headers() + get_expected_time_headers()
+
+    @staticmethod
+    def round_number(number, amount_of_digits: int = 0, round_zero: bool = True) -> Union[float, int]:
+        rounded_number = round(number, amount_of_digits)
+        if rounded_number == 0 and round_zero:
+            return 0
+        if amount_of_digits == 0:
+            return int(rounded_number)
+        return rounded_number
+
+    @staticmethod
+    def adapt_keys(dictionary: dict, old_char: str = " ", new_char: str = "-") -> dict:
+        return dict(map(lambda x: (x[0].replace(old_char, new_char), x[1]), dictionary.items()))

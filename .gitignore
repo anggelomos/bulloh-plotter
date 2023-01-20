@@ -136,3 +136,5 @@ dmypy.json
 # Pycharm
 .idea/
 
+# Plot data
+/charts/

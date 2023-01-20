@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>month habits chart</title>
+    <meta charset="UTF-8">
+    <style>
+
+        body {
+             font-family: Sans-Serif;
+        }
+
+        .numbers {
+            color: #515251;
+        }
+
+        h1 {
+            font-size: 30px;
+        }
+
+        pre {
+            font-size: 18px;
+            tab-size: 100px;
+        }
+
+        .times-block {
+            margin-left: 16px;
+            font-size: 16px;
+        }
+
+        #habits-header {
+            color: #515251;
+            margin-block-end: 0px;
+        }
+
+        .tab1 {
+            display: inline-block;
+            margin-left: 30px;
+        }
+
+        .habits-block {
+            display: inline-block;
+            margin-left: 5px;
+            margin-right: 10px;
+        }
+
+        .buttons {
+            user-select: none;
+            display: inline-block;
+            vertical-align: middle;
+            padding-bottom: 320px;
+            font-size: 22px;
+        }
+
+        #time-second-row {
+            margin-left: 12px;
+        }
+
+        #habit-selector {
+            margin-left: 60px;
+            font-size: 10px;
+        }
+
+    </style>
+</head>
+<body>
+    <h1> <span style="color: #36AB63">Overall Points:</span> <span class="numbers" id="overall-points"></span></h1>
+    <div class="times-block">
+        <h2><span style="color: #00b4d8">wh:</span> <span class="numbers" id="work-time">
+        </span><span class="tab1"></span>
+        <span style="color: #fb5607">fh:</span> <span class="numbers" id="focus-time"></span></h2>
+
+        <h2 id="time-second-row"><span style="color: #ef233c">lh:</span> <span class="numbers" id="leisure-time"></span>
+        <span class="tab1"></span>
+        <span style="color: #5a189a">sh:</span> <span class="numbers" id="sleep-time"></span></h2>
+    </div>
+
+    <h2 id="habits-header"></h2>
+    <div>
+        <span class="buttons" onclick="switchHabitValues(false)">◀️</span>
+        <div class="habits-block">
+            <pre>🧙🏽 <span id="work-on-resolutions"></span>&#0009;📖 <span id="read"></span></pre>
+            <pre>💤 <span id="sleep-more-than-7-hours"></span>&#0009;🛌 <span id="go-to-bed-early"></span></pre>
+            <pre>🌱 <span id="plan-day"></span>&#0009;🪴 <span id="plan-week"></span></pre>
+            <pre>🌲 <span id="plan-month"></span>&#0009;🧘 <span id="meditate"></span></pre>
+            <pre>👟 <span id="exercise"></span>&#0009;🖋 <span id="journaling"></span></pre>
+            <pre>📣 <span id="learn-language"></span>&#0009;</pre>
+            <p id="habit-selector"></p>
+        </div>
+        <span class="buttons" onclick="switchHabitValues(true)">▶️</span>
+    </div>
+
+    <script>
+        let currentState = 0;
+
+        const timeValues = //timeValues
+
+        const habitCheckValues = //habitCheckValues
+        const habitTimeValues = //habitTimeValues
+        const habitPercentageValues = //habitPercentageValues
+
+        const habitHeaderValues = ["Habit checks", "Habit time", "Habit percentages"];
+        const habitValues = [habitCheckValues, habitTimeValues, habitPercentageValues];
+        const habitSelectorState = ["🔵🔘🔘", "🔘🔵🔘", "🔘🔘🔵"];
+
+        updateValues(timeValues);
+        updateHabitValues(currentState);
+
+        function switchHabitValues(toTheRight) {
+            const amountStates = habitValues.length;
+
+            if (toTheRight) {
+                currentState = (currentState + 1) % amountStates;
+            } else {
+                currentState -= 1;
+            }
+
+            if (currentState < 0) {
+                currentState = amountStates - 1;
+            }
+
+            updateHabitValues(currentState);
+        }
+
+        function updateHabitValues(state) {
+            document.getElementById("habits-header").innerHTML = habitHeaderValues[state];
+            document.getElementById("habit-selector").innerHTML = habitSelectorState[state];
+            updateValues(habitValues[state]);
+        }
+
+        function updateValues(values) {
+            for (const valueId in values) {
+              try {
+                  document.getElementById(valueId).innerHTML = values[valueId];
+                } catch (error) {
+                    console.log(`error while trying to set the ${valueId} value.`)
+                }
+            }
+        }
+
+    </script>
+</body>
+</html>
