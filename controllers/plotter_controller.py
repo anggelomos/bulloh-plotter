@@ -8,7 +8,7 @@ from typing import Tuple
 import pendulum
 import plotly.express as px
 
-from controllers.notion_controllers import NotionController
+from controllers.notion_controller import NotionController
 from data.constants.expected_time_metrics import get_expected_time_headers
 from data.constants.habits import get_habit_headers
 from data.constants.habits_time import get_habit_time_headers
@@ -70,7 +70,7 @@ class PlotterController:
         time_metrics = {}
         time_points = 0
         for metric in get_time_headers():
-            amount_hours = GU.round_number(df[metric].sum(), 1)
+            amount_hours = GU.round_number(df[metric].sum())
             time_metrics[metric] = amount_hours
 
             if metric == TM.FOCUS_TIME.value:
@@ -100,11 +100,11 @@ class PlotterController:
         for habit in get_habit_time_headers():
             habit_clean = habit.replace(" time", "")
             if habit_clean in habit_times:
-                habit_times[habit_clean] = GU.round_number(df[habit].sum(), 2)
+                habit_times[habit_clean] = GU.round_number(df[habit].sum(), 1)
             else:
                 habit_keys = [header for header in get_habit_headers() if habit_clean in header]
                 for habit_key in habit_keys:
-                    habit_times[habit_key] = GU.round_number(df[habit].sum(), 2)
+                    habit_times[habit_key] = GU.round_number(df[habit].sum(), 1)
 
         return habit_times
 

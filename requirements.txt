@@ -2,3 +2,4 @@ requests
 plotly==5.11.0
 pandas
 pendulum
+boto3

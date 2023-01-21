@@ -1,7 +1,8 @@
 import logging
 import os
 
-from controllers.notion_controllers import NotionController
+from controllers.aws_controller import AWSController
+from controllers.notion_controller import NotionController
 from controllers.plotter_controller import PlotterController
 from data.constants.plot_settings.time_chart_settings import TimeChartSettings
 
@@ -15,6 +16,8 @@ def main():
     plotter.plot_time_chart(TimeChartSettings.MONTH)
     plotter.plot_habits_chart(TimeChartSettings.WEEK)
     plotter.plot_habits_chart(TimeChartSettings.MONTH)
+
+    AWSController().upload_files(plotter.plot_list)
 
 
 if __name__ == "__main__":
