@@ -7,62 +7,65 @@
 
         body {
              font-family: Sans-Serif;
+             margin: 0px;
+             margin-left: 2px;
         }
 
         .numbers {
+            font-size: 16px;
             color: #515251;
         }
 
-        h1 {
-            font-size: 30px;
+        #overall-header {
+            font-size: 20px;
         }
 
-        pre {
-            font-size: 18px;
-            tab-size: 100px;
+        #overall-points {
+            font-size: 22px;
         }
 
         .times-block {
-            margin-left: 16px;
-            font-size: 16px;
-        }
-
-        #habits-header {
-            color: #515251;
-            margin-block-end: 0px;
+            margin-left: 2px;
+            font-size: 12px;
         }
 
         .tab1 {
             display: inline-block;
-            margin-left: 30px;
+            margin-left: 10px;
+        }
+
+        #habits-header {
+            margin-bottom: 12px;
+            color: #515251;
+            font-size: 18px;
         }
 
         .habits-block {
-            display: inline-block;
-            margin-left: 30px;
+            font-size: 13px;
+            margin-left: 20px
         }
 
-        .buttons {
-            user-select: none;
+        .habits-column {
             display: inline-block;
-            vertical-align: middle;
-            padding-bottom: 320px;
-            font-size: 22px;
+            width: 48px;
+            margin: 0px;
+            vertical-align: top;
+        }
+
+        .tab2 {
+            display: inline-block;
+            vertical-align:top;
+            margin-left: 4px;
         }
 
         #time-second-row {
-            margin-left: 12px;
-        }
-
-        #habit-selector {
-            margin-left: 60px;
-            font-size: 10px;
+            margin-left: 8px;
         }
 
     </style>
 </head>
 <body>
-    <h1> <span style="color: #36AB63">Overall Points:</span> <span class="numbers" id="overall-points"></span></h1>
+    <h1 id="overall-header"> <span style="color: #515251">Overall Points:</span> <span class="numbers" id="overall-points"></span></h1>
     <div class="times-block">
         <h2><span style="color: #00b4d8">wh:</span> <span class="numbers" id="work-time">
         </span><span class="tab1"></span>
@@ -76,9 +79,17 @@
     <h2 id="habits-header">Habit time</h2>
     <div>
         <div class="habits-block">
-            <pre>📖 <span id="read"></span>&#0009;🌱 <span id="plan-day"></span></pre>
-            <pre>🧘 <span id="meditate"></span>&#0009;👟 <span id="exercise"></span></pre>
-            <pre>🖋 <span id="journaling"></span>&#0009;📣 <span id="learn-language"></span></pre>
+            <p class="habits-column">
+                📖 <span id="read"></span> <br><br>
+                🧘 <span id="meditate"></span>  <br><br>
+                🖋 <span id="journaling"></span> <br><br>
+            </p>
+            <span class="tab2"></span>
+            <p class="habits-column">
+                🌱 <span id="plan-day"></span> <br><br>
+                👟 <span id="exercise"></span> <br><br>
+                📣 <span id="learn-language"></span>
+            </p>
         </div>
     </div>
 

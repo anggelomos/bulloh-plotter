@@ -7,63 +7,80 @@
 
         body {
              font-family: Sans-Serif;
+             margin: 0px;
+             margin-left: 2px;
         }
 
         .numbers {
+            font-size: 16px;
             color: #515251;
         }
 
-        h1 {
-            font-size: 30px;
+        #overall-header {
+            font-size: 20px;
         }
 
-        pre {
-            font-size: 18px;
-            tab-size: 100px;
+        #overall-points {
+            font-size: 22px;
         }
 
         .times-block {
-            margin-left: 16px;
-            font-size: 16px;
-        }
-
-        #habits-header {
-            color: #515251;
-            margin-block-end: 0px;
+            margin-left: 2px;
+            font-size: 12px;
         }
 
         .tab1 {
             display: inline-block;
-            margin-left: 30px;
+            margin-left: 10px;
+        }
+
+        #habits-header {
+            margin-bottom: 12px;
+            color: #515251;
+            font-size: 18px;
         }
 
         .habits-block {
             display: inline-block;
-            margin-left: 5px;
-            margin-right: 10px;
+            font-size: 13px;
+        }
+
+        .habits-column {
+            display: inline-block;
+            width: 48px;
+            margin: 0px;
+            vertical-align: top;
+        }
+
+        .tab2 {
+            display: inline-block;
+            vertical-align:top;
+            margin-left: 4px;
         }
 
         .buttons {
             user-select: none;
             display: inline-block;
-            vertical-align: middle;
-            padding-bottom: 320px;
-            font-size: 22px;
+            vertical-align:top;
+            padding: 3px;
+            margin-top: 70px;
+            font-size: 16px;
         }
 
         #time-second-row {
-            margin-left: 12px;
+            margin-left: 8px;
         }
 
         #habit-selector {
-            margin-left: 60px;
-            font-size: 10px;
+            margin-left: 38px;
+            margin-top: 12px;
+            font-size: 8px;
         }
 
     </style>
 </head>
 <body>
-    <h1> <span style="color: #36AB63">Overall Points:</span> <span class="numbers" id="overall-points"></span></h1>
+    <h1 id="overall-header"> <span style="color: #515251">Overall Points:</span> <span class="numbers" id="overall-points"></span></h1>
     <div class="times-block">
         <h2><span style="color: #00b4d8">wh:</span> <span class="numbers" id="work-time">
         </span><span class="tab1"></span>
@@ -78,12 +95,17 @@
     <div>
         <span class="buttons" onclick="switchHabitValues(false)">◀️</span>
         <div class="habits-block">
-            <pre>🧙🏽 <span id="work-on-resolutions"></span>&#0009;📖 <span id="read"></span></pre>
-            <pre>💤 <span id="sleep-more-than-7-hours"></span>&#0009;🛌 <span id="go-to-bed-early"></span></pre>
-            <pre>🌱 <span id="plan-day"></span>&#0009;🪴 <span id="plan-week"></span></pre>
-            <pre>🌲 <span id="plan-month"></span>&#0009;🧘 <span id="meditate"></span></pre>
-            <pre>👟 <span id="exercise"></span>&#0009;🖋 <span id="journaling"></span></pre>
-            <pre>📣 <span id="learn-language"></span>&#0009;</pre>
+            <p class="habits-column">
+                🧙🏽 <span id="work-on-resolutions"></span> <br><br> 💤 <span id="sleep-more-than-7-hours"></span> <br><br>
+                🌱 <span id="plan-day"></span>  <br><br> 🌲 <span id="plan-month"></span>  <br><br>
+                👟 <span id="exercise"></span> <br><br> 📣 <span id="learn-language"></span>
+            </p>
+            <span class="tab2"></span>
+            <p class="habits-column">
+                📖 <span id="read"></span> <br><br> 🛌 <span id="go-to-bed-early"></span> <br><br>
+                🪴 <span id="plan-week"></span> <br><br> 🧘 <span id="meditate"></span> <br><br>
+                🖋 <span id="journaling"></span>
+            </p>
             <p id="habit-selector"></p>
         </div>
         <span class="buttons" onclick="switchHabitValues(true)">▶️</span>
