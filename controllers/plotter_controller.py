@@ -22,7 +22,7 @@ class PlotterController:
 
     def __init__(self, notion: NotionController):
         self.notion = notion
-        self.today_date = pendulum.now()
+        self.today_date = pendulum.now("America/Bogota")
         self._date_format = "%Y-%m-%d"
         self._plot_list = []
 
