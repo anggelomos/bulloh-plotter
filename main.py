@@ -1,5 +1,5 @@
-import logging
 import os
+import logging
 
 from controllers.aws_controller import AWSController
 from controllers.notion_controller import NotionController

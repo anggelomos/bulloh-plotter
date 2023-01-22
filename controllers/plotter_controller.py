@@ -6,8 +6,8 @@ from pathlib import Path
 from typing import Tuple
 
 import pendulum
-import plotly.express as px
 
+from config import CHARTS_FOLDER, EXPECTED_POINTS
 from controllers.notion_controller import NotionController
 from data.constants.expected_time_metrics import get_expected_time_headers
 from data.constants.habits import get_habit_headers
@@ -31,6 +31,9 @@ class PlotterController:
         return self._plot_list
 
     def _time_chart_plotter(self, start_date: str, end_date: str, time_setting: TimeChartSettings) -> str:
+        # Had to put the import here because the library is downloaded during runtime in the lambda_function.py
+        import plotly.express as px
+
         logging.info(f"Plotting {time_setting.value} time chart from {start_date} to {end_date}")
         df = self.notion.get_data_between_dates(start_date, end_date)
 
@@ -43,8 +46,7 @@ class PlotterController:
         fig = px.line(df, x="date", y=line_headers,
                       markers=True,
                       range_y=data_range,
-                      color_discrete_sequence=line_colors,
-                      title=f"{time_setting.value.capitalize()}'s time")
+                      color_discrete_sequence=line_colors)
 
         fig.update_layout(yaxis_title=None, xaxis_title=None)
 
@@ -54,7 +56,7 @@ class PlotterController:
             fig.data[line_index].marker.opacity = 0
 
         title_index = f"{time_setting.value}_{df.iloc[0][f'{time_setting.value} #']}"
-        chart_title = f"charts/{title_index}_time_chart.html"
+        chart_title = f"{CHARTS_FOLDER}{title_index}_time_chart.html"
 
         fig.write_html(chart_title)
         self._plot_list.append(chart_title)
@@ -113,16 +115,15 @@ class PlotterController:
         df = self.notion.get_data_between_dates(start_date, end_date)
 
         title_index = f"{time_setting.value}_{df.iloc[0][f'{time_setting.value} #']}"
-        chart_title = f"charts/{title_index}_habits_chart.html"
+        chart_title = f"{CHARTS_FOLDER}{title_index}_habits_chart.html"
         shutil.copyfile(f"templates/{time_setting.value}_habits_template.html", chart_title)
 
-        expected_points = {TimeChartSettings.WEEK: 150, TimeChartSettings.MONTH: 600}
         time_metrics, time_points = self._get_habits_chart_time_data(df)
         habit_checks, habit_percentages, habit_points = self._get_habits_general_data(df)
         habit_times = self._get_habits_time_data(df)
 
         overall_points = time_points + habit_points
-        time_metrics["overall points"] = f"{GU.round_number(overall_points/expected_points[time_setting]*100)}%"
+        time_metrics["overall points"] = f"{GU.round_number(overall_points/EXPECTED_POINTS[time_setting]*100)}%"
 
         file = Path(chart_title)
         text = file.read_text("utf-8").replace("//timeValues", json.dumps(GU.adapt_keys(time_metrics)))
