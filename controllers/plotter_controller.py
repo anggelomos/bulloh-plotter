@@ -11,7 +11,7 @@ from config import CHARTS_FOLDER, EXPECTED_POINTS
 from controllers.notion_controller import NotionController
 from data.constants.expected_time_metrics import get_expected_time_headers
 from data.constants.habits import get_habit_headers
-from data.constants.habits_time import get_habit_time_headers
+from data.constants.habits_time import get_habit_time_headers, irregular_habits_time_parser
 from data.constants.plot_settings.time_chart_settings import TimeChartSettings
 from data.constants.time_metrics import get_time_headers, TimeMetrics as TM
 from pandas import DataFrame
@@ -99,14 +99,15 @@ class PlotterController:
     @staticmethod
     def _get_habits_time_data(df: DataFrame) -> dict:
         habit_times = {habit: 0 for habit in get_habit_headers()}
+        irregular_habit_times = irregular_habits_time_parser
         for habit in get_habit_time_headers():
             habit_clean = habit.replace(" time", "")
             if habit_clean in habit_times:
                 habit_times[habit_clean] = GU.round_number(df[habit].sum(), 1)
+            elif habit in irregular_habit_times:
+                habit_times[irregular_habit_times[habit]] = GU.round_number(df[habit].sum(), 1)
             else:
-                habit_keys = [header for header in get_habit_headers() if habit_clean in header]
-                for habit_key in habit_keys:
-                    habit_times[habit_key] = GU.round_number(df[habit].sum(), 1)
+                raise ValueError(f"Could not find {habit_clean} in the habit times dictionary")
 
         return habit_times
 
