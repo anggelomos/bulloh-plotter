@@ -6,6 +6,7 @@ from data.constants.habits import get_habit_headers
 from data.constants.habits_time import get_habit_time_headers
 from data.constants.row_identifier import get_row_identifiers
 from data.constants.time_metrics import get_time_headers
+from numpy import int64
 
 
 class GeneralUtilities:
@@ -21,6 +22,8 @@ class GeneralUtilities:
         if rounded_number == 0 and round_zero:
             return 0
         if amount_of_digits == 0:
+            return int(rounded_number)
+        if isinstance(rounded_number, int64):
             return int(rounded_number)
         return rounded_number
 
