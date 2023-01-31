@@ -3,7 +3,7 @@ import logging
 import shutil
 from datetime import datetime
 from pathlib import Path
-from typing import Tuple
+from typing import Tuple, List
 
 import pendulum
 
@@ -12,6 +12,7 @@ from controllers.notion_controller import NotionController
 from data.constants.expected_time_metrics import get_expected_time_headers
 from data.constants.habits import get_habit_headers
 from data.constants.habits_time import get_habit_time_headers, irregular_habits_time_parser
+from data.constants.plot_settings.chart_types import ChartTypes
 from data.constants.plot_settings.time_chart_settings import TimeChartSettings
 from data.constants.time_metrics import get_time_headers, TimeMetrics as TM
 from pandas import DataFrame
@@ -30,7 +31,7 @@ class PlotterController:
     def plot_list(self):
         return self._plot_list
 
-    def _time_chart_plotter(self, start_date: str, end_date: str, time_setting: TimeChartSettings) -> str:
+    def _time_chart_plotter(self, start_date: str, end_date: str, year: int, time_setting: TimeChartSettings) -> str:
         # Had to put the import here because the library is downloaded during runtime in the lambda_function.py
         import plotly.express as px
 
@@ -55,17 +56,12 @@ class PlotterController:
             fig.data[line_index].line.dash = "dash"
             fig.data[line_index].marker.opacity = 0
 
-        title_index = f"{time_setting.value}_{df.iloc[0][f'{time_setting.value} #']}"
+        title_index = f"{time_setting.value}_{df.iloc[0][f'{time_setting.value} #']}_{year}"
         chart_title = f"{CHARTS_FOLDER}{title_index}_time_chart.html"
 
         fig.write_html(chart_title)
         self._plot_list.append(chart_title)
         return chart_title
-
-    def plot_time_chart(self, time_setting: TimeChartSettings) -> str:
-        start_date = self.today_date.start_of(time_setting.value).strftime(self._date_format)
-        end_date = self.today_date.end_of(time_setting.value).strftime(self._date_format)
-        return self._time_chart_plotter(start_date, end_date, time_setting)
 
     @staticmethod
     def _get_habits_chart_time_data(df: DataFrame) -> Tuple[dict, int]:
@@ -111,11 +107,11 @@ class PlotterController:
 
         return habit_times
 
-    def _habits_chart_plotter(self, start_date: str, end_date: str, time_setting: TimeChartSettings) -> str:
+    def _habits_chart_plotter(self, start_date: str, end_date: str, year: int, time_setting: TimeChartSettings) -> str:
         logging.info(f"Plotting {time_setting.value} habits chart from {start_date} to {end_date}")
         df = self.notion.get_data_between_dates(start_date, end_date)
 
-        title_index = f"{time_setting.value}_{df.iloc[0][f'{time_setting.value} #']}"
+        title_index = f"{time_setting.value}_{df.iloc[0][f'{time_setting.value} #']}_{year}"
         chart_title = f"{CHARTS_FOLDER}{title_index}_habits_chart.html"
         shutil.copyfile(f"templates/{time_setting.value}_habits_template.html", chart_title)
 
@@ -138,7 +134,20 @@ class PlotterController:
         self._plot_list.append(chart_title)
         return chart_title
 
-    def plot_habits_chart(self, time_setting: TimeChartSettings) -> str:
-        start_date = self.today_date.start_of(time_setting.value).strftime(self._date_format)
-        end_date = self.today_date.end_of(time_setting.value).strftime(self._date_format)
-        return self._habits_chart_plotter(start_date, end_date, time_setting)
+    def plot_charts(self, chart_type: ChartTypes, time_setting: TimeChartSettings) -> List[str]:
+        dates = []
+        if time_setting == TimeChartSettings.WEEK:
+            dates = [self.today_date, self.today_date.subtract(weeks=1), self.today_date.subtract(weeks=2)]
+        elif time_setting == TimeChartSettings.MONTH:
+            dates = [self.today_date, self.today_date.subtract(months=1)]
+
+        file_paths = []
+        for date in dates:
+            start_date = date.start_of(time_setting.value).strftime(self._date_format)
+            end_date = date.end_of(time_setting.value).strftime(self._date_format)
+            if chart_type == ChartTypes.TIME_CHART:
+                file_paths.append(self._time_chart_plotter(start_date, end_date, date.year, time_setting))
+            elif chart_type == ChartTypes.HABITS_CHART:
+                file_paths.append(self._habits_chart_plotter(start_date, end_date, date.year, time_setting))
+
+        return file_paths
