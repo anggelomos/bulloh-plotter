@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project.urls]
+repository = "https://github.com/anggelomos/bulloh-plotter"
+
+[tool.setuptools.package-data]
+nothion = ["py.typed"]
+
+[project]
+name = "bulloh-plotter"
+version = "0.1.0"
+description = "Script to export bulloh data as html reports."
+readme = "README.md"
+authors = [{name = "anggelomos", email = "anggelomos@outlook.com"}]
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3.10",
+]
+dependencies = [
+    "nothion",
+    "boto3",
+    "pendulum"
+]
+
+[project.optional-dependencies]
+plot = [
+    "plotly",
+    "pandas"
+]
+dev = [
+    "pytest",
+    "pytest-cov",
+    "twine",
+    "flake8",
+    "mypy",
+    "types-requests",
+    "pandas-stubs",
+    "boto3-stubs"
+]

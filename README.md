@@ -1,2 +1,2 @@
 # bulloh-plotter
-Export bulloh data as html reports
+Script to export bulloh data as html reports.

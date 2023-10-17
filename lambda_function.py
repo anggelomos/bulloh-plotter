@@ -1,20 +1,17 @@
-import sys
 import os
 import zipfile
 
-from config import TMP_FOLDER, CHARTS_FOLDER
-from controllers.aws_controller import AWSController
+from src._config import CHARTS_FOLDER
+from src.aws_client import AWSClient
 from main import main
 
 
 def lambda_handler(event, conntext):
     # Downloading plotly dependency from S3 during runtime because of the lambda size limit
     zip_dependencies = "plotly-dependencies.zip"
-    AWSController().download_file(zip_dependencies, TMP_FOLDER + zip_dependencies)
-    with zipfile.ZipFile(TMP_FOLDER + zip_dependencies, "r") as zip_ref:
-        zip_ref.extractall(TMP_FOLDER)
-
-    sys.path.insert(0, TMP_FOLDER)
+    AWSClient().download_file(zip_dependencies, zip_dependencies)
+    with zipfile.ZipFile(zip_dependencies, "r") as zip_ref:
+        zip_ref.extractall()
 
     if not os.path.exists(CHARTS_FOLDER):
         os.makedirs(CHARTS_FOLDER)

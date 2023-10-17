@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>week habits chart</title>
+    <meta charset="UTF-8">
+    <style>
+
+        body {
+             font-family: Sans-Serif;
+             margin: 0px;
+             margin-left: 2px;
+        }
+
+        .numbers {
+            font-size: 16px;
+            color: #515251;
+        }
+
+        #overall-header {
+            font-size: 20px;
+        }
+
+        #overall-points {
+            font-size: 22px;
+        }
+
+        .times-block {
+            margin-left: 2px;
+            font-size: 12px;
+        }
+
+        .tab1 {
+            display: inline-block;
+            margin-left: 10px;
+        }
+
+        #habits-header {
+            margin-bottom: 12px;
+            color: #515251;
+            font-size: 18px;
+        }
+
+        .habits-block {
+            font-size: 13px;
+            margin-left: 20px
+        }
+
+        .habits-column {
+            display: inline-block;
+            width: 48px;
+            margin: 0px;
+            vertical-align: top;
+        }
+
+        .tab2 {
+            display: inline-block;
+            vertical-align:top;
+            margin-left: 4px;
+        }
+
+        #time-second-row {
+            margin-left: 8px;
+        }
+
+    </style>
+</head>
+<body>
+    <h1 id="overall-header"> <span style="color: #515251">Overall Points:</span> <span class="numbers" id="overall-points"></span></h1>
+    <div class="times-block">
+        <h2><span style="color: #00b4d8">wh:</span> <span class="numbers" id="work-time">
+        </span><span class="tab1"></span>
+        <span style="color: #fb5607">fh:</span> <span class="numbers" id="focus-time"></span></h2>
+
+        <h2 id="time-second-row"><span style="color: #ef233c">lh:</span> <span class="numbers" id="leisure-time"></span>
+        <span class="tab1"></span>
+        <span style="color: #5a189a">sh:</span> <span class="numbers" id="sleep-time"></span></h2>
+    </div>
+
+    <h2 id="habits-header">Habit time</h2>
+    <div>
+        <div class="habits-block">
+            <p class="habits-column">
+                📖 <span id="read"></span> <br><br>
+                🧘 <span id="meditate"></span>  <br><br>
+                🖋 <span id="journaling"></span> <br><br>
+            </p>
+            <span class="tab2"></span>
+            <p class="habits-column">
+                🌱 <span id="plan-day"></span> <br><br>
+                👟 <span id="exercise"></span> <br><br>
+                📣 <span id="learn-language"></span>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        const timeValues = //timeValues
+        const habitTimeValues = //habitTimeValues
+
+        updateValues(timeValues);
+        updateValues(habitTimeValues);
+
+        function updateValues(values) {
+            for (const valuesId in values) {
+                try {
+                  document.getElementById(valuesId).innerHTML = values[valuesId];
+                } catch (error) {
+                    console.log(`error while trying to set the habit ${valuesId} value.`)
+                }
+            }
+        }
+
+    </script>
+</body>
+</html>

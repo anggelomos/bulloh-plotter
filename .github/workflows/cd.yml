@@ -1,0 +1,73 @@
+# This workflow will upload a Python Package using Twine when a release is created
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python#publishing-to-package-registries
+
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+name: Upload Python Package
+
+on: [push, workflow_dispatch]
+
+env:
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  NT_AUTH: ${{ secrets.NT_AUTH }}
+  NT_STATS_DB_ID: ${{ secrets.NT_STATS_DB_ID }}
+
+permissions:
+  contents: read
+
+jobs:
+  test-repo:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.10'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -e .[dev]
+
+    - name: Lint with flake8
+      run: flake8 src
+
+    - name: Lint with mypy
+      run: mypy src
+
+
+  update-lambda:
+      needs: test-repo
+      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      runs-on: ubuntu-latest
+
+      steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install awscli
+
+      - name: Create lambda package
+        run: |
+          mkdir lambda-deployment-package
+          cp -r src main.py lambda_function.py lambda-deployment-package
+          pip install -t lambda-deployment-package .
+          cd lambda-deployment-package
+          zip -r ../lambda-deployment-package.zip .
+          cd ..
+
+      - name: Upload lambda package
+        run: aws lambda update-function-code --function-name bulloh-plotter --zip-file fileb://lambda-deployment-package.zip --region us-east-1
