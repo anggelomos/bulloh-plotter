@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>month habits chart</title>
+    <title>habits chart</title>
     <meta charset="UTF-8">
     <style>
 
@@ -14,19 +14,6 @@
         .numbers {
             font-size: 16px;
             color: #515251;
-        }
-
-        #overall-header {
-            font-size: 20px;
-        }
-
-        #overall-points {
-            font-size: 22px;
-        }
-
-        .times-block {
-            margin-left: 2px;
-            font-size: 12px;
         }
 
         .tab1 {
@@ -67,10 +54,6 @@
             font-size: 16px;
         }
 
-        #time-second-row {
-            margin-left: 8px;
-        }
-
         #habit-selector {
             margin-left: 38px;
             margin-top: 12px;
@@ -80,18 +63,7 @@
     </style>
 </head>
 <body>
-    <h1 id="overall-header"> <span style="color: #515251">Overall Points:</span> <span class="numbers" id="overall-points"></span></h1>
-    <div class="times-block">
-        <h2><span style="color: #00b4d8">wh:</span> <span class="numbers" id="work-time">
-        </span><span class="tab1"></span>
-        <span style="color: #fb5607">fh:</span> <span class="numbers" id="focus-time"></span></h2>
-
-        <h2 id="time-second-row"><span style="color: #ef233c">lh:</span> <span class="numbers" id="leisure-time"></span>
-        <span class="tab1"></span>
-        <span style="color: #5a189a">sh:</span> <span class="numbers" id="sleep-time"></span></h2>
-    </div>
-
-    <h2 id="habits-header"></h2>
+    <h2 id="habits-header">Habits Data</h2>
     <div>
         <span class="buttons" onclick="switchHabitValues(false)">◀️</span>
         <div class="habits-block">

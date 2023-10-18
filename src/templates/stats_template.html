@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>stats chart</title>
+    <meta charset="UTF-8">
+    <style>
+
+        body {
+             font-family: Sans-Serif;
+             margin: 0px;
+             margin-left: 2px;
+        }
+
+        .numbers {
+            font-size: 16px;
+            color: #515251;
+        }
+
+        #overall-header {
+            font-size: 20px;
+        }
+
+        #overall-points {
+            font-size: 24px;
+        }
+
+        .times-block {
+            margin-left: 2px;
+            font-size: 12px;
+        }
+
+        .tab1 {
+            display: inline-block;
+            margin-left: 10px;
+        }
+
+        .tab2 {
+            display: inline-block;
+            vertical-align:top;
+            margin-left: 4px;
+        }
+
+        #time-second-row {
+            margin-left: 8px;
+        }
+
+    </style>
+</head>
+<body>
+    <h1 id="overall-header"> <span style="color: #515251">Overall Points:</span> <span class="numbers" id="overall_points"></span></h1>
+    <div class="times-block">
+        <h2><span style="color: #00b4d8">wh:</span> <span class="numbers" id="work_time">
+        </span><span class="tab1"></span>
+        <span style="color: #fb5607">fh:</span> <span class="numbers" id="focus_time"></span></h2>
+
+        <h2 id="time-second-row"><span style="color: #ef233c">lh:</span> <span class="numbers" id="leisure_time"></span>
+        <span class="tab1"></span>
+        <span style="color: #5a189a">sh:</span> - <span class="numbers" id="sleep_time"></span></h2>
+    </div>
+
+    <script>
+        const timeValues = //timeValues
+        updateValues(timeValues);
+
+        function updateValues(values) {
+            for (const valuesId in values) {
+                try {
+                  document.getElementById(valuesId).innerHTML = values[valuesId];
+                } catch (error) {
+                    console.log(`error while trying to set the habit ${valuesId} value.`)
+                }
+            }
+        }
+
+    </script>
+</body>
+</html>
