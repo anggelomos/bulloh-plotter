@@ -87,7 +87,7 @@ class BullohPlotter:
                       range_y=data_range,
                       color_discrete_sequence=line_colors)
 
-        fig.update_layout(yaxis_title=None, xaxis_title=None)
+        fig.update_layout(yaxis_title=None, xaxis_title=None, margin=dict(l=0, r=0, t=0, b=0))
 
         initial_range = len(get_time_headers())
         for line_index in range(initial_range, initial_range + len(get_time_headers())):
