@@ -19,9 +19,6 @@ def main():
     plotter.plot_charts(ChartTypes.TIME_CHART, TimeChartSettings.WEEK)
     plotter.plot_charts(ChartTypes.TIME_CHART, TimeChartSettings.MONTH)
 
-    plotter.plot_charts(ChartTypes.STATS_CHART, TimeChartSettings.DAY)
-    plotter.plot_charts(ChartTypes.STATS_CHART, TimeChartSettings.WEEK)
-    plotter.plot_charts(ChartTypes.STATS_CHART, TimeChartSettings.MONTH)
     # TODO: Uncomment when habits are restored
     # plotter.plot_charts(ChartTypes.HABITS_CHART, TimeChartSettings.WEEK)
     # plotter.plot_charts(ChartTypes.HABITS_CHART, TimeChartSettings.MONTH)

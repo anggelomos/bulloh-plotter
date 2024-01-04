@@ -58,8 +58,8 @@ class BullohPlotter:
             case _:
                 raise ValueError(f"Time setting {time_setting} is not supported")
 
-        title_index = f"{time_setting.value}_{date_number}_{start_date.year}"
-        return f"{CHARTS_FOLDER}{title_index}_{chart_type.value}.html"
+        title_index = f"{start_date.year}_{chart_type.value}_{time_setting.value}_{date_number}"
+        return f"{CHARTS_FOLDER}{title_index}.html"
 
     def _time_chart_plotter(self, start_date: datetime, end_date: datetime, time_setting: TimeChartSettings)\
             -> str:

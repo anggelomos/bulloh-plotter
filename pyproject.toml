@@ -32,7 +32,6 @@ plot = [
 dev = [
     "pytest",
     "pytest-cov",
-    "twine",
     "flake8",
     "mypy",
     "types-requests",
