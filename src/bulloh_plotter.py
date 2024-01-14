@@ -61,8 +61,7 @@ class BullohPlotter:
         title_index = f"{start_date.year}_{chart_type.value}_{time_setting.value}_{date_number}"
         return f"{CHARTS_FOLDER}{title_index}.html"
 
-    def _time_chart_plotter(self, start_date: datetime, end_date: datetime, time_setting: TimeChartSettings)\
-            -> str:
+    def _time_chart_plotter(self, start_date: datetime, end_date: datetime, time_setting: TimeChartSettings) -> str:
         # Had to put the import here because the library is downloaded during runtime in the lambda_function.py
         import plotly.express as px  # type: ignore
         logging.info(f"Plotting {time_setting.value} time chart from {start_date} to {end_date}")
@@ -81,7 +80,7 @@ class BullohPlotter:
 
         data_range = [0, 12]
         line_headers = get_time_headers() + get_expected_time_headers()
-        line_colors = ["#00b4d8", "#fb5607", "#ef233c"] * 2
+        line_colors = ["#00b4d8", "#fb5607", "#ef233c", "#822593"] * 2
         fig = px.line(plot_data, x="date", y=line_headers,
                       markers=True,
                       range_y=data_range,

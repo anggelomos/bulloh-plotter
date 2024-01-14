@@ -4,6 +4,7 @@ expected_time_metrics = {
     "expected work time": 6,
     "expected focus time": 4,
     "expected leisure time": 2,
+    "expected sleep time": 8,
 }
 
 
